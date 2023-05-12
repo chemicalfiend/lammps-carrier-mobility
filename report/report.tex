@@ -1,0 +1,91 @@
+\documentclass{article}
+
+\title{Novel Project Report: \\ Charge Transport and Mobility in Organic Semiconductors}
+
+\author{Pranay Venkatesh \\ 2019B2A11004P}
+
+
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+
+       \textbf{Charge Transport and Mobility in Organic Semiconductors}
+            
+       \vspace{1.5cm}
+
+       \textbf{Pranay Venkatesh \\ 2019B2A11004P}
+
+       \vspace{4cm}
+            
+       A report presented for the course\\
+       Novel Project (NP)
+            
+       \vspace{0.8cm}
+     
+       \includegraphics[width=0.3\textwidth]{university}
+            
+       Department of Chemical Engineering\\
+       BITS Pilani, Pilani Campus\\
+       Rajasthan\\
+       May, 2023
+            
+   \end{center}
+\end{titlepage}
+
+
+\tableofcontents
+
+\pagebreak
+
+\section*{Acknowledgements}
+
+\section{Introduction and Background}
+
+In this report, we will discuss a method we can employ to determine the mobility of charge carriers (electrons and holes) in organic semiconductor materials. Before that it is helpful to review what organic semiconductors are and why they are useful.
+
+\subsection{Organic Semiconductors}
+
+\subsection{BBL Molecules for Gas Sensing}
+
+\subsection{Challenge of determining mobility}
+
+Determining the mobility of charge carriers in materials that do not have long-range crystalline order is rather difficult. They do not obey traditional properties of transport and quantum mechanical effects start to dominate.
+
+Given the disordered nature of the material and the fact that quantum effects dominate, we can no longer use convenient methods such as band structure theory or semiclassical transport equations. The movement and mobility of electrons and holes is no longer simply a function of an excitation from a valence band to a conduction band. To compute mobilities of electrons, we now need to consider how they "hop" from site to site. When we have a bunch of molecules bundled up together, these "sites" are basically the HOMO and LUMO levels of the donor and acceptor of the electron in a given hop.
+
+One of the major challenges is to figure out which path an electron will take when it's at any given site. An electron at a given site has many available sites it can hop to. Each of those sites has some hopping likelihood associated with it. So, now the problem we try to address in this project is: given a morphology of equilibrated molecules, (1) how do we determine the likelihood of hopping from one site to another? , (2) with all hopping rates, how do we determine the mobility of electrons across the bulk of the material?
+
+Addressing the first question, many kinetic models have been developed to try and figure out the hopping rates between two quantum states. The model we use here is the semi-classical Marcus model for hopping rates in a two state quantum system, as described in Section 2. To answer the second question: for taking an aggregate of all the hops for all the electrons, we need to run some probabilistic simulation for our system. Here, we use kinetic monte carlo simulations as described in Section 3. 
+
+\section{Marcus Theory}
+
+
+\section{Kinetic Monte Carlo Model}
+
+
+
+\section{Candidate Software for Implementation}
+
+\subsection{Schrodinger}
+
+\subsection{Votca-XTP}
+
+\subsection{MorphCT}
+
+
+\section{Installing and using MorphCT}
+
+\section{LAMMPS-to-Mobility Workflow}
+
+\section{Results and Discussion}
+
+%TODO : add Bibliography with bibtex
+
+\end{document}
+
+
+

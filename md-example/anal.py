@@ -15,10 +15,10 @@ with gsd.hoomd.open(name="system.gsd", mode='rb') as f:
     snap = f[-1]
 
 
-print(*snap.particles.typeid)
-print(snap.particles.types)
+#print(*snap.particles.typeid)
+#print(snap.particles.types)
 
-print(snap.particles.types[snap.particles.typeid[7]])
+#print(snap.particles.types[snap.particles.typeid[7]])
 
 
 box = snap.configuration.box[:3]
@@ -34,21 +34,10 @@ unwrap_snap.particles.types = [bbl_dict[i].symbol for i in snap.particles.types]
 
 
 gsd_mol_index = snap_molecule_indices(snap)
-print(gsd_mol_index)
+#print(gsd_mol_index)
 k = np.count_nonzero(gsd_mol_index==0)
-#k = 324
-print(k)
 chromo_ids = np.arange(snap.particles.N)[0:k]
 
-#num_molecules = 2
-#chromo_ids = []
-
-#num_atoms = 324
-#for i in range(1, num_molecules+1):
-#    a = [i-1 for j in range(0, num_atoms)]
-#    chromo_ids.append(a)
-
-print(chromo_ids)
 
 master_list = []
 sublist = chromo_ids
@@ -57,15 +46,15 @@ for i in range(len(np.unique(gsd_mol_index))):
     master_list.append(sublist)
     sublist = np.array([x + k for x in sublist])
 
-"""
+
 if __name__ == '__main__':
-    system = System("traj3.gsd", "bbl", frame=-1, scale=3.5636, conversion_dict=bbl_dict)
+    system = System("system.gsd", "md-test", frame=-1, scale=3.5636, conversion_dict=bbl_dict)
     system.add_chromophores(master_list, "acceptor", chromophore_kwargs={"reorganization_energy" : 0.324})
     system.compute_energies()
     system.set_energies()
     lifetime = [1e-10, 1e-9]
     temp = 300
     system.run_kmc(lifetime, temp, n_elec=200)
-"""
+
 
 

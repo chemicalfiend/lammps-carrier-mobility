@@ -88,6 +88,8 @@ for i in range(105, 1685):
 
 # Store and add bonds
 
+# TODO: Read and store charges of individual atoms
+
 bondi = []
 bondj = []
 
@@ -120,7 +122,7 @@ for i in range(num_molecules):
 
 
 for i in range(len(bondi)):
-    system.add_bond((bondi[i], bondj[i]))
+    system.add_bond((system[bondi[i] - 1], system[bondj[i] - 1]))
 
 
 print(system.n_bonds)

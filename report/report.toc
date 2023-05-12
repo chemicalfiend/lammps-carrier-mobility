@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction and Background}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Organic Semiconductors}{2}{}%
+\contentsline {subsection}{\numberline {1.2}BBL Molecules for Gas Sensing}{2}{}%
+\contentsline {subsection}{\numberline {1.3}Challenge of determining mobility}{2}{}%
+\contentsline {section}{\numberline {2}Marcus Theory}{3}{}%
+\contentsline {section}{\numberline {3}Kinetic Monte Carlo Model}{3}{}%
+\contentsline {section}{\numberline {4}Candidate Software for Implementation}{3}{}%
+\contentsline {subsection}{\numberline {4.1}Schrodinger}{3}{}%
+\contentsline {subsection}{\numberline {4.2}Votca-XTP}{3}{}%
+\contentsline {subsection}{\numberline {4.3}MorphCT}{3}{}%
+\contentsline {section}{\numberline {5}Installing and using MorphCT}{3}{}%
+\contentsline {section}{\numberline {6}LAMMPS-to-Mobility Workflow}{3}{}%
+\contentsline {section}{\numberline {7}Results and Discussion}{3}{}%
