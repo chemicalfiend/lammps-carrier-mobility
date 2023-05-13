@@ -2,4 +2,9 @@
 *.sty
 *.log
 *.aux
+*.swp
+*.fdb_latexmk
+*.gz
+*.toc
+*.fls
 

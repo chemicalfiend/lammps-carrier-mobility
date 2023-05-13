@@ -7,6 +7,19 @@
 
 \usepackage{graphicx}
 
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={NP Report},
+}
+
+
 \begin{document}
 
 \begin{titlepage}
@@ -66,7 +79,7 @@ Addressing the first question, many kinetic models have been developed to try an
 
 \section{Kinetic Monte Carlo Model}
 
-
+\section{Literature Data for BBL Mobility}
 
 \section{Candidate Software for Implementation}
 
@@ -79,9 +92,94 @@ Addressing the first question, many kinetic models have been developed to try an
 
 \section{Installing and using MorphCT}
 
+MorphCT is the software we finally settle on, since the entire workflow can be carried out in Python and it is completely an open source software. 
+
+\subsection{Getting python and conda}
+
+To install MorphCT, first begin by installing python and anaconda. Understanding some of the basics of python, pip and anaconda is very helpful in working with MorphCT. Anaconda can be installed by running the following commands (in Linux / WSL / your Cyclops account) :
+
+\begin{lstlisting}
+    curl -sL \
+    "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" \ >
+    "Miniconda3.sh"
+\end{lstlisting}
+
+This adds the Miniconda3 install script to your home directory. Now install miniconda by running:
+
+\begin{lstlisting}
+
+    bash Miniconda3.sh
+
+\end{lstlisting}
+
+\subsection{Install MorphCT}
+
+Get the morphCT files to your home directory by using the following command (make sure you have git installed) :
+
+\begin{lstlisting}
+
+git clone https://github.com/cmelab/morphct.git
+
+\end{lstlisting}
+
+Go into the MorphCT directory and create a conda environment for installing the package:
+
+\begin{lstlisting}
+
+cd morphct
+
+conda env create -f environment.yml
+
+\end{lstlisting}
+
+This will take some time, but it will set up the requirements for morphct. Now, complete the installation for morphct:
+
+\begin{lstlisting}
+
+conda activate morphct
+
+pip install -e .
+
+\end{lstlisting}
+
+The "." at the end of the command is important, since it specifies that you want to install it in that directory. This should complete the installation of morphct.
+
+Now, while in the morphct environment, you can run python scripts and programs that utilise morphct or its dependencies.
+
 \section{LAMMPS-to-Mobility Workflow}
 
+LAMMPS is not a python-based software nor is it traditionally compatible with the python toolkits that we are using for MorphCT.
+
+Hence for working with MorphCT, we need to convert the LAMMPS morphology into an appropriate file to use it. I have created a workflow to take a snapshot of a LAMMPS molecular dynamics (MD) simulation output. The workflow I developed is described in the package : \href{https://github.com/chemicalfiend/lammps-carrier-mobility}{lammps-carrier-mobility}
+
+To use this workflow, start by extracting the coordinate and bond data into separate files called "sorted\_coords.data" and "sorted\_bonds.data". The data should be sorted by atom number and bond number. To run MorphCT,we need to convert the LAMMPS data files of the morphology into gsd files. To convert files into gsd files, we can use the mbuild package, which can save atoms and molecules as gsd files. The script gsdwriter.py converts the sorted coordinates and sorted bonds files into a gsd file. 
+
+To run the script gsdwriter.py, we first require the mbuild package. In your conda environment, use the following command to install mbuild :
+
+\begin{lstlisting}
+
+conda install -c conda-forge mbuild
+
+\end{lstlisting}
+
+Now, we can run the script by running:
+
+\begin{lstlisting}
+
+python3 gsdwriter.py
+
+\end{lstlisting}
+
+
+Running the script takes time. It generates the output file : "system.gsd", for which we can perform the Kinetic Monte Carlo analysis.
+
+The script "kmc-analysis.py" lays out a basic template for calculating the mobility of the system with MorphCT.
+
+
 \section{Results and Discussion}
+
+\subsection{Toy System : 10 PEDOT molecules}
+
 
 %TODO : add Bibliography with bibtex
 
