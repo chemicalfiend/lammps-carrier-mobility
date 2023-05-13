@@ -70,11 +70,16 @@ Determining the mobility of charge carriers in materials that do not have long-r
 
 Given the disordered nature of the material and the fact that quantum effects dominate, we can no longer use convenient methods such as band structure theory or semiclassical transport equations. The movement and mobility of electrons and holes is no longer simply a function of an excitation from a valence band to a conduction band. To compute mobilities of electrons, we now need to consider how they "hop" from site to site. When we have a bunch of molecules bundled up together, these "sites" are basically the HOMO and LUMO levels of the donor and acceptor of the electron in a given hop.
 
-One of the major challenges is to figure out which path an electron will take when it's at any given site. An electron at a given site has many available sites it can hop to. Each of those sites has some hopping likelihood associated with it. So, now the problem we try to address in this project is: given a morphology of equilibrated molecules, (1) how do we determine the likelihood of hopping from one site to another? , (2) with all hopping rates, how do we determine the mobility of electrons across the bulk of the material?
+One of the major challenges is to figure out which path an electron will take when it's at any given site. An electron at a given site has many available sites it can hop to. Each of those sites has some hopping likelihood associated with it. So, now the problem we try to address in this project is: given a morphology of equilibrated molecules, (1) how do we determine the electronic states and compute the HOMO and LUMO levels for each site? (2) how do we determine the likelihood of hopping from one site to another? , (3) with all hopping rates, how do we determine the mobility of electrons across the bulk of the material?
 
-Addressing the first question, many kinetic models have been developed to try and figure out the hopping rates between two quantum states. The model we use here is the semi-classical Marcus model for hopping rates in a two state quantum system, as described in Section 2. To answer the second question: for taking an aggregate of all the hops for all the electrons, we need to run some probabilistic simulation for our system. Here, we use kinetic monte carlo simulations as described in Section 3. 
+The first question is answered in Section 2, where we showcase using semiempirical quantum mechanical methods to solve the Schrodinger equation and obtain the states.
+
+Addressing the second question, many kinetic models have been developed to try and figure out the hopping rates between two quantum states. The model we use here is the semi-classical Marcus model for hopping rates in a two state quantum system, as described in Section 3. To answer the second question: for taking an aggregate of all the hops for all the electrons, we need to run some probabilistic simulation for our system. Here, we use kinetic monte carlo simulations as described in Section 4.
+
+\section{Quantum Chemical Calculations}
 
 \section{Marcus Theory}
+
 
 
 \section{Kinetic Monte Carlo Model}
@@ -154,11 +159,13 @@ Hence for working with MorphCT, we need to convert the LAMMPS morphology into an
 
 To use this workflow, start by extracting the coordinate and bond data into separate files called "sorted\_coords.data" and "sorted\_bonds.data". The data should be sorted by atom number and bond number. To run MorphCT,we need to convert the LAMMPS data files of the morphology into gsd files. To convert files into gsd files, we can use the mbuild package, which can save atoms and molecules as gsd files. The script gsdwriter.py converts the sorted coordinates and sorted bonds files into a gsd file. 
 
-To run the script gsdwriter.py, we first require the mbuild package. In your conda environment, use the following command to install mbuild :
+To run the script gsdwriter.py, we first require the mbuild and gsd packages. In your conda environment, use the following command to install mbuild :
 
 \begin{lstlisting}
 
 conda install -c conda-forge mbuild
+
+conda install -c conda-forge gsd
 
 \end{lstlisting}
 

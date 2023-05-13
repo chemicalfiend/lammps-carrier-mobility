@@ -15,7 +15,7 @@ with gsd.hoomd.open(name="system.gsd", mode='rb') as f:
     snap = f[-1]
 
 
-print(snap.particles.typeid)
+print(*snap.particles.typeid)
 print(snap.particles.types)
 
 print(snap.particles.types[snap.particles.typeid[7]])
@@ -36,10 +36,7 @@ unwrap_snap.particles.types = [bbl_dict[i].symbol for i in snap.particles.types]
 gsd_mol_index = snap_molecule_indices(snap)
 print(gsd_mol_index)
 k = np.count_nonzero(gsd_mol_index==0)
-print(k)
 chromo_ids = np.arange(snap.particles.N)[0:k]
-
-print(chromo_ids)
 
 
 master_list = []
