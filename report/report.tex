@@ -11,6 +11,17 @@
 
 \usepackage{listings}
 
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+
+
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -54,7 +65,6 @@
 
 \pagebreak
 
-\section*{Acknowledgements}
 
 \section{Introduction and Background}
 
@@ -62,7 +72,15 @@ In this report, we will discuss a method we can employ to determine the mobility
 
 \subsection{Organic Semiconductors}
 
-\subsection{BBL Molecules for Gas Sensing}
+Organic semiconductors are materials that showcase various semiconducting properties, but unlike silicon or other traditional inorganic semiconductors, are based off of carbon-based molecules and polymers. Due to their significant advantages in processability and flexible nature, they have attracted tremendous attention in the past few decades. Their potential for applications in thin film transistors, organic light emitting diodes (OLEDs), photovoltaics (OPVs) and even memory devices has been explored greatly over the past 10-20 years. %TODO: need references, particularly for memory stuff.
+
+Organic semiconductors operate rather differently from traditional inorganic solid-state devices. $\pi$-conjugated electrons in organic molecules are loosely bound and can hence hop or tunnel between molecular states. When organic molecules or polymers begin to "stack" or form layers and lamellar packed motifs, their $\pi$-conjugated rings come close and allow for significant $\pi$-$\pi$ stacking and this allows for regimes where significant charge transport can occur. However, due to mostly disordered regions, we cannot apply the band theory to understand their electronic structure or charge transport properties (more of this is explored in Section 1.2). Instead of doping, organic molecules are oxidised or reduced to introduce carriers and change the nature of the semiconductor material to n or p type accordingly.
+
+Organic semiconductors have various advantages, including low-cost processability, flexibility, a variety of optical properties and compatibility with the environment. Hence they are beginning to dominate the space of research in semiconductor materials.
+
+Since organic materials can interact with a variety of analytes, they have shown promise for gas sensing applications. Several organic molecules change their electrical properties when exposed to specific gases. Hence a macromolecule with one end serving as a binding site and another end serving as an electron transport site acts as a perfect gas sensor. For gas sensing applications, organic molecules have incredible advantages including low-power consumption, high sensitivity and selectivity and quick response time. 
+
+In this report, one particular candidate molecule, BBL (polybenzimidazobenzophenanthroline) is explored for gas sensing applications.
 
 \subsection{Challenge of determining mobility}
 
@@ -74,36 +92,63 @@ One of the major challenges is to figure out which path an electron will take wh
 
 The first question is answered in Section 2, where we showcase using semiempirical quantum mechanical methods to solve the Schrodinger equation and obtain the states.
 
-Addressing the second question, many kinetic models have been developed to try and figure out the hopping rates between two quantum states. The model we use here is the semi-classical Marcus model for hopping rates in a two state quantum system, as described in Section 3. To answer the second question: for taking an aggregate of all the hops for all the electrons, we need to run some probabilistic simulation for our system. Here, we use kinetic monte carlo simulations as described in Section 4.
+Addressing the second question, many kinetic models have been developed to try and figure out the hopping rates between two quantum states. The model we use here is the semi-classical Marcus model for hopping rates in a two state quantum system, as described in Section 3. To answer the third question: for taking an aggregate of all the hops for all the electrons, we need to run some probabilistic simulation for our system. Here, we use kinetic monte carlo simulations as described in Section 4.
 
 \section{Quantum Chemical Calculations}
 
+% TODO : Cite PySCF, MINDO3.
+
+To get the hopping rates from site to site, it's important to first have the energy changes associated with the hop. This requires us to have information about the electronic structure of each molecule in the system. Specifically, if an electron is hopping from site $i$ to site $j$, we need to have information about the HOMO of site $i$ and the LUMO of site $j$ since we assume the hop takes place as a HOMO to LUMO transition from $i$ to $j$. 
+
+There are many methods we can use to determine the electronic structure of a set of molecules in a morphology, such as Density Functional Theory (DFT). In this case, we apply Semi-Empirical methods, specifically Intermediate Neglect of Differential Overlap (INDO) methods. In our work, the quantum chemical calculations are performed with the MINDO/3 calculations implemented in PySCF. Other programs use DFT-based methods, however comparison of INDO-based results have shown good agreement with those performed with DFT calculations. 
+
+
+
 \section{Marcus Theory}
 
+% TODO : Cite the original Marcus theory papers(?)
 
+We can model the charge hops between two molecules or sites in an organic semiconductor as a set of nonadiabatic thermally active processes. If we model each site as a parabolic potential well, we need to sample some of the parameters of the intersection of two parabolic site energies to understand the hopping rate.
+
+From the Frank-Condon principle, we can further assume that the morphology of nuclei stays frozen during the electron transport reaction and further that the intersection point corresponds to a unique equilibrium geometry.
+
+% TODO : add an image of two intersecting parabolas to show Marcus energies like in Jimmy thesis.
+
+Now, an Arrhenius model can be used to model the kinetics of the electron transport reaction between sites. For an electron transport reaction between sites i and j, we can devise a model for the hopping rate $k_{ij}$ using an appropriate exponential Arrhenius equation as such :
+
+$$k_{ij} = \frac{2 \pi |T_{ij}|^2}{\hbar \sqrt{4 \pi \lambda_{ij} k_{B} T}} \exp\left[-\frac{(\Delta E_{ij} - \lambda_{ij})^2}{4 \pi \lambda_{ij} k_{B} T}\right]$$
+
+Here, $T_{ij}$ represents the overlap between the electronic states, $\lambda_{ij}$ is the reorganisation energy of the system and $\Delta E_{ij}$ is the free energy change.
+
+%TODO : Site the reorganisation energy eric paper
+
+The $\lambda_{ij}$ term is important since it exemplifies the semiclassical nature of the Marcus equation. $\lambda_{ij}$ is called the reorganisation energy. It represents the energy required to "reorganise" the electronic states of the system, prior to any charge transferring. $\lambda$ values have to be determined either empirically or using very specific electronic structure methods, beyond the scope of this report. % TODO : Find papers for BBL reorganisation energy and cite.
+For the case of BBL polymers, several literature records provide the value of the reorganisation energy, which we can use in the Marcus equation.
+
+The energy value $\Delta E_{ij}$ is given by:
+
+$$\Delta E_{ij} = E_{homo, i} - E_{homo, j}$$
+
+and the overlap $T_{ij}$ can be computed by considering a dimer formed by "overlapping" the pair of sites (forming a dimer) and then comparing the site energy difference when overlapped and when separated:
+
+$$T_{ij} = \frac{1}{2} \sqrt{(E_{homo,dimer} - E_{homo-1,dimer})^2 - (\Delta E_{ij})^2}$$
 
 \section{Kinetic Monte Carlo Model}
 
-\section{Literature Data for BBL Mobility}
-
-\section{Candidate Software for Implementation}
-
-\subsection{Schrodinger}
-
-\subsection{Votca-XTP}
-
-\subsection{MorphCT}
+%TODO: Cite Voter literature for kMC stuff
 
 
 \section{Installing and using MorphCT}
 
-MorphCT is the software we finally settle on, since the entire workflow can be carried out in Python and it is completely an open source software. 
+%TODO: Cite MorphCT zenodo and Eric paper
+
+MorphCT is the software we use to implement our workflow, since the entire operation can be carried out in Python and it is completely an open source software. 
 
 \subsection{Getting python and conda}
 
 To install MorphCT, first begin by installing python and anaconda. Understanding some of the basics of python, pip and anaconda is very helpful in working with MorphCT. Anaconda can be installed by running the following commands (in Linux / WSL / your Cyclops account) :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
     curl -sL \
     "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" \ >
     "Miniconda3.sh"
@@ -111,7 +156,7 @@ To install MorphCT, first begin by installing python and anaconda. Understanding
 
 This adds the Miniconda3 install script to your home directory. Now install miniconda by running:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
     bash Miniconda3.sh
 
@@ -121,7 +166,7 @@ This adds the Miniconda3 install script to your home directory. Now install mini
 
 Get the morphCT files to your home directory by using the following command (make sure you have git installed) :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
 git clone https://github.com/cmelab/morphct.git
 
@@ -129,7 +174,7 @@ git clone https://github.com/cmelab/morphct.git
 
 Go into the MorphCT directory and create a conda environment for installing the package:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
 cd morphct
 
@@ -139,7 +184,7 @@ conda env create -f environment.yml
 
 This will take some time, but it will set up the requirements for morphct. Now, complete the installation for morphct:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
 conda activate morphct
 
@@ -159,9 +204,150 @@ Hence for working with MorphCT, we need to convert the LAMMPS morphology into an
 
 To use this workflow, start by extracting the coordinate and bond data into separate files called "sorted\_coords.data" and "sorted\_bonds.data". The data should be sorted by atom number and bond number. To run MorphCT,we need to convert the LAMMPS data files of the morphology into gsd files. To convert files into gsd files, we can use the mbuild package, which can save atoms and molecules as gsd files. The script gsdwriter.py converts the sorted coordinates and sorted bonds files into a gsd file. 
 
+\begin{lstlisting}[language=python]
+
+"""
+
+Program to write a GSD file for a trajectory from a LAMMPS data file.
+
+Used for Charge Transport calculations
+
+"""
+
+
+import mbuild as mb
+import numpy as np
+import os
+
+num_molecules = 10
+atoms_per_mol = 158
+
+
+if(os.path.exists("system.gsd")):
+    os.remove("system.gsd")
+class Atom:
+    def __init__(self, n, mol, typeid, charge, x, y, z):
+        self.n = n
+        self.mol = mol
+        self.charge = charge
+        self.x = x
+        self.y = y
+        self.z = z
+
+        if(typeid <= 18):
+            self.atomtype = "C"
+
+        elif(typeid > 18 and typeid <= 31):
+            self.atomtype = "H"
+
+        elif(typeid == 32):
+            self.atomtype = "F"
+        
+        elif(typeid == 33):
+            self.atomtype = "Cl"
+
+        elif(typeid == 34):
+            self.atomtype = "Br"
+
+        elif(typeid == 35):
+            self.atomtype = "I"
+
+        elif(typeid >= 36 and typeid <= 56):
+            self.atomtype = "N"
+
+        elif(typeid >= 57 and typeid <= 62):
+            self.atomtype = "O"
+
+        elif (typeid >= 63 and typeid <= 73):
+            self.atomtype = "P"
+
+        elif (typeid >= 74 and typeid <= 83):
+            self.atomtype = "S"
+
+        else:
+            self.atomtype = " "
+
+class Bond:
+    def __init__(self, a1, a2):
+        self.atom1 = a1
+        self.atom2 = a2
+
+
+fc = open("sorted_coords.data", "r")
+fb = open("sorted_bonds.data", "r")
+
+clines = fc.readlines()
+blines = fb.readlines()
+
+atoms = []
+
+
+for line in clines:
+    tokens = line.split()
+    #print(tokens)    
+    n = int(tokens[0])
+    mol = int(tokens[1])
+    typeid = int(tokens[2])
+    charge = float(tokens[3])
+    x = float(tokens[4])
+    y = float(tokens[5])
+    z = float(tokens[6])
+    
+    atoms.append(Atom(n, mol, typeid, charge, x, y, z))
+
+# Store and add bonds
+
+
+bondi = []
+bondj = []
+
+for line in blines:
+    tokens = line.split()
+    #print(tokens)
+    atom1 = int(tokens[2])
+    atom2 = int(tokens[3])
+
+    bondi.append(atom1)
+    bondj.append(atom2)
+
+#print(bondi)
+#print(bondj)
+system = mb.Compound()
+
+# System box and other parameters set.
+
+#system.box = mb.Box([xhi-xlo, yhi-ylo, zhi-zlo])
+
+for i in range(num_molecules):
+    m = i + 1
+    mol = mb.Compound()
+
+    for atom in atoms:
+        if atom.mol == m:
+            a = mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge)
+            mol.add(a)
+
+    system.add(mol)
+
+"""
+for atom in atoms:
+    a = mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge)
+    system.add(a)
+"""
+for i in range(len(bondi)):
+    system.add_bond((system[bondi[i] - 1], system[bondj[i] - 1]))
+
+
+print(system.n_bonds)
+
+system.save("system.gsd")
+
+
+\end{lstlisting}
+
 To run the script gsdwriter.py, we first require the mbuild and gsd packages. In your conda environment, use the following command to install mbuild :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
 conda install -c conda-forge mbuild
 
@@ -171,7 +357,7 @@ conda install -c conda-forge gsd
 
 Now, we can run the script by running:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 
 python3 gsdwriter.py
 
@@ -180,12 +366,12 @@ python3 gsdwriter.py
 
 Running the script takes time. It generates the output file : "system.gsd", for which we can perform the Kinetic Monte Carlo analysis.
 
-The script "kmc-analysis.py" lays out a basic template for calculating the mobility of the system with MorphCT.
+The script "kmc-analysis.py" lays out a basic template for calculating the mobility of the system with MorphCT. To run this script, the MorphCT environment must be activated.
 
 
 \section{Results and Discussion}
 
-\subsection{Toy System : 10 PEDOT molecules}
+\subsection{10 Molecules Test System}
 
 
 %TODO : add Bibliography with bibtex
