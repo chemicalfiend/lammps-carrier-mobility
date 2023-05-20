@@ -10,6 +10,8 @@ Used for Charge Transport calculations
 import mbuild as mb
 import numpy as np
 import os
+import time
+
 
 num_molecules = 200
 atoms_per_mol = 324
@@ -122,6 +124,7 @@ system = mb.Compound()
 
 #system.box = mb.Box([xhi-xlo, yhi-ylo, zhi-zlo])
 
+start_time = time.time()
 
 for i in range(num_molecules):
     m = i + 1
@@ -134,12 +137,21 @@ for i in range(num_molecules):
 
     system.add(mol)
 
+particle_time = time.time() - start_time
+particles = system.n_particles
+
+print(f"Time for adding {particles} particles = {particle_time} seconds")
+
+
+start_timeb = time.time()
 
 for i in range(len(bondi)):
     #print(f"Adding bond number {i}")
     system.add_bond((system[bondi[i] - 1], system[bondj[i] - 1]))
 
+bonds = system.n_bonds
+bond_time = time.time() - start_timeb
 
-print(system.n_bonds)
+print(f"Time for adding {bonds} bonds = {bond_time} seconds")
 
 system.save("system.gsd")

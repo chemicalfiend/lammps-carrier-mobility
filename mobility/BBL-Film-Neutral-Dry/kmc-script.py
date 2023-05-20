@@ -49,7 +49,7 @@ for i in range(len(np.unique(gsd_mol_index))):
     master_list.append(sublist)
     sublist = np.array([x + k for x in sublist])
 
-"""
+
 if __name__ == '__main__':
     system = System("system.gsd", "md-test", frame=-1, scale=3.5636, conversion_dict=bbl_dict)
     system.add_chromophores(master_list, "acceptor", chromophore_kwargs={"reorganization_energy" : 0.324})
@@ -58,6 +58,6 @@ if __name__ == '__main__':
     lifetime = [1e-10, 1e-9]
     temp = 300
     system.run_kmc(lifetime, temp, n_elec=200)
-"""
+
 
 
