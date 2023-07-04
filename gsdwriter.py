@@ -10,13 +10,15 @@ Used for Charge Transport calculations
 import mbuild as mb
 import numpy as np
 import os
-
-num_molecules = 10
-atoms_per_mol = 158
+import networkx as nx
 
 
-if(os.path.exists("system.gsd")):
-    os.remove("system.gsd")
+num_molecules = 200
+atoms_per_mol = 324
+
+
+if(os.path.exists("systemk5.gsd")):
+    os.remove("systemk5.gsd")
 class Atom:
     def __init__(self, n, mol, typeid, charge, x, y, z):
         self.n = n
@@ -102,8 +104,7 @@ for line in clines:
 
 # TODO: Read and store charges of individual atoms
 
-bondi = []
-bondj = []
+bonds = []
 
 for line in blines:
     tokens = line.split()
@@ -111,38 +112,64 @@ for line in blines:
     atom1 = int(tokens[2])
     atom2 = int(tokens[3])
 
-    bondi.append(atom1)
-    bondj.append(atom2)
+    bonds.append((atom1-1, atom2-1))
 
-#print(bondi)
-#print(bondj)
+graph = nx.Graph()
+
+for bond in bonds:
+    graph.add_edge(bond[0], bond[1])
+
+#for i in range(392):
+#    print(bonds[i])
+
+status = []
+for i in range(0, n): status.append(False)
+
+compounds = []
+
 system = mb.Compound()
 
-# System box and other parameters set.
+#for i in range(num_molecules):
 
-#system.box = mb.Box([xhi-xlo, yhi-ylo, zhi-zlo])
-
-"""
-for i in range(num_molecules):
-    m = i + 1
+count = 0
+for c in nx.connected_components(graph):
     mol = mb.Compound()
+    
+    temp = list(c)
+    temp.sort()
+    #print(temp)
+    for item in temp:
+        atom = atoms[item]
 
-    for atom in atoms:
-        if atom.mol == m:
-            a = mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge)
-            mol.add(a)
+        mol.add(mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge))
+        #system.add(mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge))
 
-    system.add(mol)
+        status[item] = True
+
+    #for bond in bonds:
+    #    mol.add_bond((bond[0]-1, bond[1]-1))
+    for edge in graph.subgraph(c).edges:
+        #print(edge)
+        mol.add_bond((mol[edge[0]-(324*count)], mol[edge[1]-(324*count)]))
+        #system.add_bond((system[edge[0]], system[edge[1]]))
+    
+    compounds.append(mol)
+    count = count + 1
+
 """
-
 for atom in atoms:
-    a = mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge)
-    system.add(a)
+    system.add(mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge))
 
-for i in range(len(bondi)):
-    system.add_bond((system[bondi[i] - 1], system[bondj[i] - 1]))
+    particle_list = list(system.children)
 
+for bond in bonds:
+    if atoms[bond[0]].mol == m:
+        system.add_bond((particle_list[bond[0]], particle_list[bond[1]]))
+
+
+"""
+system.add(compounds)
 
 print(system.n_bonds)
 
-system.save("system.gsd")
+system.save("systemk5.gsd")
