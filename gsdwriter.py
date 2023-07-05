@@ -17,8 +17,8 @@ num_molecules = 200
 atoms_per_mol = 324
 
 
-if(os.path.exists("systemk5.gsd")):
-    os.remove("systemk5.gsd")
+if(os.path.exists("systemdmbi1.gsd")):
+    os.remove("systemdmbi1.gsd")
 class Atom:
     def __init__(self, n, mol, typeid, charge, x, y, z):
         self.n = n
@@ -132,6 +132,9 @@ system = mb.Compound()
 #for i in range(num_molecules):
 
 count = 0
+
+#print(len(atoms))
+
 for c in nx.connected_components(graph):
     mol = mb.Compound()
     
@@ -139,6 +142,7 @@ for c in nx.connected_components(graph):
     temp.sort()
     #print(temp)
     for item in temp:
+        #print(item)
         atom = atoms[item]
 
         mol.add(mb.Particle(pos=[atom.x, atom.y, atom.z], element = atom.atomtype, name=atom.atomtype, charge= atom.charge))
@@ -172,4 +176,4 @@ system.add(compounds)
 
 print(system.n_bonds)
 
-system.save("systemk5.gsd")
+system.save("systemdmbi1.gsd")

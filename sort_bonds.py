@@ -1,7 +1,7 @@
-cstart = 291301 # line number where coords start (-1)
-cend = 422900 # line number where coords end
+cstart = 457599 # line number where coords start (-1)
+cend = 687159 # line number where coords end
 
-fd = open("final.data", "r")
+fd = open("final-10.data", "r")
 fo = open("sorted_bonds.data", "w")
 
 rs = 1      # Index for start of relevant molecules
@@ -16,6 +16,7 @@ lines = fd.readlines()
 bonds = []
 
 for i in range(cstart, cend):
+   # print(i)
     line = lines[i]
     tokens = line.split()
     n = int(tokens[0])

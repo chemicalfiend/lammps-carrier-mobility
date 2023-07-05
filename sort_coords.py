@@ -1,7 +1,7 @@
-cstart = 95 # line number where coords start (-1)
-cend = 145694 # line number where coords end
+cstart = 93 # line number where coords start (-1)
+cend = 228843 # line number where coords end
 
-fd = open("final.data", "r")
+fd = open("final-10.data", "r")
 fo = open("sorted_coords.data", "w")
 
 lines = fd.readlines()
