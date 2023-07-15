@@ -154,7 +154,7 @@ for c in nx.connected_components(graph):
     #    mol.add_bond((bond[0]-1, bond[1]-1))
     for edge in graph.subgraph(c).edges:
         #print(edge)
-        mol.add_bond((mol[edge[0]-(324*count)], mol[edge[1]-(324*count)]))
+        mol.add_bond((mol[edge[0]-((atoms_per_mol)*count)], mol[edge[1]-((atoms_per_mol)*count)]))
         #system.add_bond((system[edge[0]], system[edge[1]]))
     
     compounds.append(mol)
