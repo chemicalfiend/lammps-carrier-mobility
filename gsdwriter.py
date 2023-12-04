@@ -176,4 +176,4 @@ system.add(compounds)
 
 print(system.n_bonds)
 
-system.save("systemdmbi1.gsd")
+system.save("10-chain.gsd")

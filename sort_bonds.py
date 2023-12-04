@@ -1,7 +1,7 @@
-cstart = 457599 # line number where coords start (-1)
-cend = 687159 # line number where coords end
+cstart = 13059 # line number where coords start (-1)
+cend = 20899 # line number where coords end
 
-fd = open("final-10.data", "r")
+fd = open("final.data", "r")
 fo = open("sorted_bonds.data", "w")
 
 rs = 1      # Index for start of relevant molecules
