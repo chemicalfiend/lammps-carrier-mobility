@@ -1,13 +1,13 @@
 # lammps-carrier-mobility
 Workflow for getting the carrier mobilities from LAMMPS trajectories.
 
-To run this, you need MorphCT installed (https://github.com/cmelab/morphct), along with mBuild and gsd, which you can get by simply using conda-forge.
+To run this workflow, you need to install and build my package MOObility (https://github.com/chemicalfiend/MOObility), along with mBuild and gsd, which you can get by simply using conda-forge.
 
 ## Using the script
 
 Dump the relevant snapshot from your LAMMPS trajectory as a LAMMPS data file. Extract the coordinates and bonds and sort them by their index number and save them as "sorted\_coords.data" and "sorted\_bonds.data" respectively.
 
-Activate a conda environment in which you have mbuild installed and then run the following command:
+Activate a conda environment in which you have mbuild and gsd installed and then run the following command:
 
 ```
 python3 gsdwriter.py
