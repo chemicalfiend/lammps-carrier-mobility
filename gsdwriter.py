@@ -16,9 +16,11 @@ import networkx as nx
 num_molecules = 200
 atoms_per_mol = 324
 
+fname = "DMBI-5.gsd"
 
-if(os.path.exists("systemdmbi1.gsd")):
-    os.remove("systemdmbi1.gsd")
+
+if(os.path.exists(fname)):
+    os.remove(fname)
 class Atom:
     def __init__(self, n, mol, typeid, charge, x, y, z):
         self.n = n
@@ -176,4 +178,4 @@ system.add(compounds)
 
 print(system.n_bonds)
 
-system.save("10-chain.gsd")
+system.save(fname)

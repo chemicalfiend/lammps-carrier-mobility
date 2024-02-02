@@ -1,7 +1,7 @@
 # lammps-carrier-mobility
 Workflow for getting the carrier mobilities from LAMMPS trajectories.
 
-To run this workflow, you need to install and build my package MOObility (https://github.com/chemicalfiend/MOObility), along with mBuild and gsd, which you can get by simply using conda-forge.
+To run this workflow, you need to install and build the package MorphCT (https://github.com/cmelab/morphct), along with mBuild and gsd, which you can get by simply using conda-forge.
 
 ## Using the script
 

@@ -1,7 +1,10 @@
 cstart = 93 # line number where coords start (-1)
-cend = 6573 # line number where coords end
+cend = 188843 # line number where coords end
 
-fd = open("final.data", "r")
+filepath = "../data-files/BBL-DMBI/5/final.data"
+
+
+fd = open(filepath, "r")
 fo = open("sorted_coords.data", "w")
 
 lines = fd.readlines()

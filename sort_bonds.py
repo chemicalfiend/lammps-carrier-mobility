@@ -1,7 +1,9 @@
-cstart = 13059 # line number where coords start (-1)
-cend = 20899 # line number where coords end
+cstart = 377599 # line number where bonds start (-1)
+cend = 565159  # line number where bonds end
 
-fd = open("final.data", "r")
+filepath = "../data-files/BBL-DMBI/5/final.data"
+
+fd = open(filepath, "r")
 fo = open("sorted_bonds.data", "w")
 
 rs = 1      # Index for start of relevant molecules
