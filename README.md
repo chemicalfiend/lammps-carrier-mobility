@@ -1,5 +1,7 @@
 # lammps-carrier-mobility
-Workflow for getting the carrier mobilities from LAMMPS trajectories.
+Workflows for getting the carrier mobilities from LAMMPS trajectories. Messy scripts that may or may not work.
+
+# Python Module
 
 To run this workflow, you need to install and build the package MorphCT (https://github.com/cmelab/morphct), along with mBuild and gsd, which you can get by simply using conda-forge.
 
@@ -15,5 +17,8 @@ python3 gsdwriter.py
 ```
 
 This will convert the sorted\_coords and sorted\_bonds files into a gsd file called "system.gsd". Then you can run any kmc code based off of this. A sample kmc workflow is provided in kmc-script.py. The md-example directory showcases this being used for a system with 10 PEDOT molecules.
+
+
+# Gaussian Scripts
 
 
